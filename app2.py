@@ -78,10 +78,10 @@ h2, h3, h4, h5, h6, p, label {
     font-size: 18px !important;
 }
 
-/* BUTTON STYLE */
+/* BUTTON STYLE (BLACK BACKGROUND + WHITE TEXT) */
 div.stButton > button {
-    background-color: white !important;
-    color: black !important;
+    background-color: black !important;
+    color: white !important;
     font-size: 20px !important;
     font-weight: bold !important;
     padding: 10px 25px !important;
