@@ -43,7 +43,7 @@ st.markdown("""
     z-index: 0;
 }
 
-/* Main container center + spacing */
+/* Main container */
 .block-container {
     position: relative;
     z-index: 1;
@@ -68,7 +68,7 @@ h2, h3, h4, h5, h6, p, label {
     text-align: center;
 }
 
-/* Slider text size */
+/* Slider text */
 .stSlider label {
     font-size: 18px !important;
 }
@@ -80,7 +80,7 @@ h2, h3, h4, h5, h6, p, label {
 
 /* BUTTON STYLE */
 div.stButton > button {
-    background-color: black !important;
+    background-color: white !important;
     color: black !important;
     font-size: 20px !important;
     font-weight: bold !important;
@@ -88,10 +88,9 @@ div.stButton > button {
     border-radius: 10px !important;
     border: none !important;
     cursor: pointer !important;
-    box-shadow: none !important;
 }
 
-/* RESULT BOX (NO GLASS - SIMPLE RED) */
+/* RESULT BOX */
 .result-box {
     background: #d50000;
     color: white;
@@ -103,7 +102,7 @@ div.stButton > button {
     text-align: center;
 }
 
-/* TOP 3 BOX (SIMPLE DARK) */
+/* TOP 3 BOX */
 .top3 {
     background: rgba(0,0,0,0.8);
     color: white;
@@ -145,10 +144,17 @@ soil = st.selectbox("", ['sandy', 'loamy', 'clay'])
 soil_map = {'sandy': 0, 'loamy': 1, 'clay': 2}
 
 # =========================
+# CENTERED BUTTON
+# =========================
+col1, col2, col3 = st.columns([1, 1, 1])
+
+with col2:
+    predict = st.button("🔍 Predict Crop")
+
+# =========================
 # PREDICTION
 # =========================
-
-if st.button("🔍 Predict Crop"):
+if predict:
 
     input_data = np.array([[N, P, K, temp, humidity, rainfall, soil_map[soil]]])
     input_scaled = scaler.transform(input_data)
@@ -165,10 +171,7 @@ if st.button("🔍 Predict Crop"):
     )
 
     # TOP 3
-    
     st.write("### 🌿 Top 3 Recommendations")
 
     for i in top3:
         st.write(f"✔ {crop_labels[i]} → {probs[i]*100:.2f}%")
-
-    st.markdown("</div>", unsafe_allow_html=True)
