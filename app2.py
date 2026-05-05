@@ -8,14 +8,14 @@ import pickle
 # =========================
 # PAGE CONFIG
 # =========================
-st.set_page_config(page_title="🌾 Smart Crop", layout="wide")
+st.set_page_config(page_title="🌾 Smart Crop ", layout="wide")
 
 # =========================
 # LOAD MODEL
 # =========================
-model = pickle.load(open("model.pkl", "rb"))
-scaler = pickle.load(open("scaler.pkl", "rb"))
-crop_labels = pickle.load(open("labels.pkl", "rb"))
+model = pickle.load(open("model2.pkl", "rb"))
+scaler = pickle.load(open("scaler2.pkl", "rb"))
+crop_labels = pickle.load(open("labels2.pkl", "rb"))
 
 # =========================
 # CSS (CLEAN UI ONLY)
@@ -43,7 +43,7 @@ st.markdown("""
     z-index: 0;
 }
 
-/* Main container */
+/* Main container center + spacing */
 .block-container {
     position: relative;
     z-index: 1;
@@ -68,7 +68,7 @@ h2, h3, h4, h5, h6, p, label {
     text-align: center;
 }
 
-/* Slider text */
+/* Slider text size */
 .stSlider label {
     font-size: 18px !important;
 }
@@ -78,19 +78,20 @@ h2, h3, h4, h5, h6, p, label {
     font-size: 18px !important;
 }
 
-/* BUTTON STYLE (BLACK BACKGROUND + WHITE TEXT) */
+/* BUTTON STYLE */
 div.stButton > button {
     background-color: black !important;
-    color: white !important;
+    color: black !important;
     font-size: 20px !important;
     font-weight: bold !important;
     padding: 10px 25px !important;
     border-radius: 10px !important;
     border: none !important;
     cursor: pointer !important;
+    box-shadow: none !important;
 }
 
-/* RESULT BOX */
+/* RESULT BOX (NO GLASS - SIMPLE RED) */
 .result-box {
     background: #d50000;
     color: white;
@@ -102,7 +103,7 @@ div.stButton > button {
     text-align: center;
 }
 
-/* TOP 3 BOX */
+/* TOP 3 BOX (SIMPLE DARK) */
 .top3 {
     background: rgba(0,0,0,0.8);
     color: white;
@@ -144,17 +145,10 @@ soil = st.selectbox("", ['sandy', 'loamy', 'clay'])
 soil_map = {'sandy': 0, 'loamy': 1, 'clay': 2}
 
 # =========================
-# CENTERED BUTTON
-# =========================
-col1, col2, col3 = st.columns([1, 1, 1])
-
-with col2:
-    predict = st.button("🔍 Predict Crop")
-
-# =========================
 # PREDICTION
 # =========================
-if predict:
+
+if st.button("🔍 Predict Crop"):
 
     input_data = np.array([[N, P, K, temp, humidity, rainfall, soil_map[soil]]])
     input_scaled = scaler.transform(input_data)
@@ -171,7 +165,10 @@ if predict:
     )
 
     # TOP 3
+    
     st.write("### 🌿 Top 3 Recommendations")
 
     for i in top3:
         st.write(f"✔ {crop_labels[i]} → {probs[i]*100:.2f}%")
+
+    st.markdown("</div>", unsafe_allow_html=True)
