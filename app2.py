@@ -8,7 +8,7 @@ import pickle
 # =========================
 # PAGE CONFIG
 # =========================
-st.set_page_config(page_title="🌾 Smart Crop AI", layout="wide")
+st.set_page_config(page_title="🌾 Smart Crop", layout="wide")
 
 # =========================
 # LOAD MODEL
